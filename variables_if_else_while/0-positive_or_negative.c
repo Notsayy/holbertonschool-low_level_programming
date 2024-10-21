@@ -1,31 +1,32 @@
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h>
 /**
-* main - Entry point
-*
-* Description: Prints a specific message to stdout using puts.
-* Return: Always 0 (Success)
-*/
+ * main - Entry Point
+ *
+ * Description: Print whether the variable n is positive or negative.
+ * Return: Always 0 if Success.
+ */
 int main(void)
 {
 int n;
 
 srand(time(0));
 n = rand() - RAND_MAX / 2;
-printf("%d \n", x);
 
-if (x > 0)
-{
-printf("The number is positive \n");
-}
-else if (x < 0)
-{
-printf("The number is negative \n");
-}
+if (n < 0)
+	{
+	printf("%d is negative\n", (int)sizeof(n));
+	}
+
+else if (n == 0)
+	{
+	printf("%d is zero\n", (int)sizeof(n));
+	}
+
 else
-{
-printf("The number is zero \n");
-}
+	{
+	printf("%d is positive\n", (int)sizeof(n));
+	}
 return (0);
 }
-
