@@ -1,32 +1,34 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
+
 /**
-* main - Entry Point
-*
-* Description: Print whether the variable n is positive or negative.
-* Return: Always 0 if Success.
-*/
+ * main - Entry Point
+ *
+ * Description: Print the last digit of the number stored in the variable n
+ * Return: Always 0 if Success.
+ */
 int main(void)
 {
-int n;
+    int n;
+    int last_digit;
 
-srand(time(0));
-n = rand() - RAND_MAX / 2;
+    srand(time(0));
+    n = rand() - RAND_MAX / 2;
+    last_digit = n % 10;
 
-if (n < 0)
-{
-printf("%d is negative\n", n);
-}
-else if (n == 0)
-{
-printf("%d is zero\n", n);
-}
-else
-{
-printf("%d is positive\n", n);
-}
+    if (last_digit > 5)
+    {
+        printf("Last digit of %d is %d and is greater than 5\n", n, last_digit);
+    }
+    else if (last_digit == 0)
+    {
+        printf("Last digit of %d is %d and is 0\n", n, last_digit);
+    }
+    else
+    {
+        printf("Last digit of %d is %d and is less than 6 and not 0\n", n, last_digit);
+    }
 
-return (0);
+    return (0);
 }
-
