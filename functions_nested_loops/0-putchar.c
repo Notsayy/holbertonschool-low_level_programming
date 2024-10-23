@@ -1,14 +1,20 @@
-#include <stdio.h>
+#include "main.h"
+
 /**
- * main - Entry Point
+ * main - prints _putchar, followed by a new line
  *
- * Description:Write a program that prints _putchar, followed by a new line.
- * Return: Always 0 if Success.
+ * Return: 0 on success
  */
 int main(void)
 {
-	printf("_putchar");
+char str[] = "_putchar";
+int i;
 
-	printf("\n");
-	return (0);
+for (i = 0; str[i] != '\0'; i++)
+{
+_putchar(str[i]);
+}
+_putchar('\n');
+
+return (0);
 }
