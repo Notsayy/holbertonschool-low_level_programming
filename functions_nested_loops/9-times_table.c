@@ -19,7 +19,7 @@ if (b != 0)
 _putchar(44);
 _putchar(32);
 }
-if (c < 10)
+if (c < 10 && b != 0)
 {
 _putchar(32);
 _putchar(c + '0');
