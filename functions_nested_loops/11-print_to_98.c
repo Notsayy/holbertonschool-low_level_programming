@@ -4,7 +4,7 @@
 /**
  * print_to_98 - prints all natural numbers from n to 98
  * @n: starting integer
- * Description: This function prints numbers from the given integer n
+ * Description:This function prints numbers from the given integer n
  *
  */
 
