@@ -1,26 +1,27 @@
 #include "main.h"
-
 /**
- * times_table - Entry point
- * Return: empty output
+ * times_table - imprime la table de multiplication jusqu'à 9.
  */
-
 void times_table(void)
 {
-int a, b, c;
-for (a = 0; a <= 9; a++)
-{
-for (b = 0; b <= 9; b++)
-{
-c = a * b;
-if (b != 0)
-{
-_putchar(44);
-if (c < 10)
-_putchar(32);
-}
-_putchar(c + '0');
-}
-_putchar('\n');
-}
+	int ligne, colonne, produit;
+
+	for (ligne = 0; ligne <= 9; ligne++)
+	{
+		_putchar('0');
+		for (colonne = 1; colonne <= 9; colonne++)
+		{
+			_putchar(',');
+			_putchar(' ');
+
+			produit = ligne * colonne;
+
+			if (produit <= 9)
+				_putchar(' ');
+			else
+				_putchar((produit / 10) + '0');
+			_putchar((produit % 10) + '0');
+		}
+		_putchar('\n');
+	}
 }
