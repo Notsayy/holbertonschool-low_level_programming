@@ -26,3 +26,4 @@ void print_triangle(int size)
 	else
 		_putchar('\n');
 }
+tets
