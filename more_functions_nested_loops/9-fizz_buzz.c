@@ -25,7 +25,7 @@ else
 {
 printf("%d", i);
 }
-if (i > 1)
+if (i >= 1)
 printf(" ");
 }
 printf("\n");
