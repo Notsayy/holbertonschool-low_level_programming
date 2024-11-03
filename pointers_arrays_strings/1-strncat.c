@@ -3,8 +3,8 @@
  * _strncat - Concatenates two strings
  * @src: Source string
  * @dest: Destination string
- * @n: number
- * Return: A pointer to the resulting string dest
+ * @n: Maximum number of bytes to use from src
+ * Return: pointer to dest
  */
 
 char *_strncat(char *dest, char *src, int n)
