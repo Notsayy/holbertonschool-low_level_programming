@@ -1,15 +1,15 @@
 #include "main.h"
 
 /**
- * _strlen_recursion -  Prints a string, followed by a new line.
- * @s: pointer to the string would be printed
+ * _strlen_recursion - Calculates the length of a string recursively.
+ * @s: Pointer to the string to be measured.
+ * Return: The length of the string.
  */
 int _strlen_recursion(char *s)
-
 {
-	if (*s <= '\0')
+	if (*s == '\0')
 	{
 		return (0);
 	}
-		return (1 + (_strlen_recursion(s + 1)));
+	return (1 + _strlen_recursion(s + 1));
 }
