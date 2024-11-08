@@ -5,7 +5,7 @@
  * main - This function is main
  * @argc: arguments contents
  * @argv: arguments vectors
- * Return: Voiture
+ * Return: 0 on success, 1 on error
  */
 
 int main(int argc, char *argv[])
