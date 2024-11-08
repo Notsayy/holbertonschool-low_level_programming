@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /**
- * main - This function is main
+ * main -  Prints the addition of positive numbers
  * @argc: arguments contents
  * @argv: arguments vectors
  * Return: 0 on success, 1 on error
@@ -12,12 +12,6 @@ int main(int argc, char *argv[])
 {
 	int result = 0;
 	int i, j;
-
-	if (argc == 1)
-	{
-		printf("0\n");
-		return (1);
-	}
 
 	for (i = 1; i < argc; i++)
 	{
