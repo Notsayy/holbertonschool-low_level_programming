@@ -5,6 +5,7 @@
  * @argv: An array containing the program command line arguments
 */
 int main(int argc, char *argv[])
+
 {
 	(void)argc;
 	printf("%s\n", argv[0]);
