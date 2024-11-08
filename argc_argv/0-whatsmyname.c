@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include "main.h"
 /**
  * main - Entry point
  * @argc: The number of command line arguments
  * @argv: An array containing the program command line arguments
+ * Return : 0
 */
 int main(int argc, char *argv[])
 
