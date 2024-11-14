@@ -20,8 +20,8 @@ if (ptr == NULL)
 	return (NULL);
 
 while (i < (nmemb * size))
-i++;
 ptr[i] = 0;
+i++;
 
 return ((void *)ptr);
 }
