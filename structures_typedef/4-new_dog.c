@@ -15,8 +15,8 @@ dog_t *new_dog(char *name, float age, char *owner)
 	dog_t *new_dog;
 	unsigned int name_length = 0;
 	unsigned int owner_length = 0;
-	unsigned char *name_copy;
-	unsigned char *owner_copy;
+	char *name_copy;
+	char *owner_copy;
 	unsigned int i;
 	unsigned int j;
 
