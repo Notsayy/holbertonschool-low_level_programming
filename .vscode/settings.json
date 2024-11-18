@@ -3,7 +3,8 @@
 		"main.h": "c",
 		"stdio.h": "c",
 		"stdlib.h": "c",
-		"dog.h": "c"
+		"dog.h": "c",
+		"typeinfo": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }
