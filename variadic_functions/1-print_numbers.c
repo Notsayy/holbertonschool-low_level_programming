@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include "variadic_functions.h"
 /**
-* print_numbers - Returns the sum of all its parameters.
+* print_numbers - Prints numbers, followed by a new line.
 * @n: String to be printed between numbers
 * @separator: String to be printed between numbers
 * Return: Void
