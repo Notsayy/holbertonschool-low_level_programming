@@ -55,21 +55,23 @@ void print_all(const char * const format, ...)
 
 	void (*print_funcs[])(va_list) = {print_char, print_int,
 		print_float, print_string};
-	char formats[] = {'c', 'i', 'f', 's'};
+	char format_specifiers[] = {'c', 'i', 'f', 's'};
 
 	va_start(args, format);
 
 	while (format && format[i])
 	{
-		for (j = 0; j < sizeof(formats); j++)
+		j = 0;
+		while (j < sizeof(format_specifiers) / sizeof(format_specifiers[0]))
 		{
-			if (format[i] == formats[j])
+			if (format[i] == format_specifiers[j])
 			{
 				printf("%s", sep);
 				print_funcs[j](args);
 				sep = ", ";
 				break;
 			}
+			j++;
 		}
 		i++;
 	}
