@@ -3,50 +3,73 @@
 #include "variadic_functions.h"
 
 /**
- * print_all - Prints anything
- * @format: List of types of arguments passed to the function
- * Return: Void
+ * print_char - Print a character from the argument list.
+ * @args: The argument list.
+ */
+void print_char(va_list args)
+{
+	printf("%c", va_arg(args, int));
+}
+
+/**
+ * print_int - Print an integer from the argument list.
+ * @args: The argument list.
+ */
+void print_int(va_list args)
+{
+	printf("%d", va_arg(args, int));
+}
+
+/**
+ * print_float - Print a float from the argument list.
+ * @args: The argument list.
+ */
+void print_float(va_list args)
+{
+	printf("%f", va_arg(args, double));
+}
+
+/**
+ * print_string - Print a string from the argument list.
+ * @args: The argument list.
+ */
+void print_string(va_list args)
+{
+	char *str = va_arg(args, char *);
+
+	if (str == NULL)
+		str = "(nil)";
+	printf("%s", str);
+}
+
+/**
+ * print_all - Prints anything based on the format provided.
+ * @format: List of types of arguments passed to the function.
  */
 void print_all(const char * const format, ...)
 {
 	va_list args;
 	unsigned int i = 0;
-	char *str;
+	unsigned int j;
 	char *sep = "";
+
+	void (*print_funcs[])(va_list) = {print_char, print_int,
+		print_float, print_string};
+	char formats[] = {'c', 'i', 'f', 's'};
 
 	va_start(args, format);
 
 	while (format && format[i])
 	{
-		if (format[i] == 'c')
+		for (j = 0; j < sizeof(formats); j++)
 		{
-			printf("%s%c", sep, va_arg(args, int));
-			sep = ", ";
-		}
-		else if (format[i] == 'i')
-		{
-			printf("%s%d", sep, va_arg(args, int));
-			sep = ", ";
-		}
-		else if (format[i] == 'f')
-		{
-			printf("%s%f", sep, va_arg(args, double));
-			sep = ", ";
-		}
-		else if (format[i] == 's')
-		{
-			str = va_arg(args, char *);
-			if (str == NULL)
+			if (format[i] == formats[j])
 			{
-				str = "(nil)";
+				printf("%s", sep);
+				print_funcs[j](args);
+				sep = ", ";
+				break;
 			}
-			printf("%s%s", sep, str);
-			sep = ", ";
-		}
-		else
-		{
-			i++;
-			continue;
 		}
 		i++;
 	}
