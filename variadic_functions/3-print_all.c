@@ -43,6 +43,11 @@ void print_all(const char * const format, ...)
 			printf("%s%s", sep, str);
 			sep = ", ";
 		}
+		else
+		{
+			i++;
+			continue;
+		}
 		i++;
 	}
 
