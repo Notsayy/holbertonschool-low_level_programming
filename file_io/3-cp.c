@@ -1,27 +1,45 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define BUFFER_SIZE 1024
 
+void close_func(int fd);
+void handle_error(int code, const char *message, const char *file);
+
 /**
- * close_func - Closes a file descriptor and handles errors.
- * @file: File descriptor to close.
+ * close_func - Closes a file descriptor, handling errors
+ * @fd: File descriptor
  */
-void close_func(int file)
+void close_func(int fd)
 {
-	if (close(file) == -1)
+	if (close(fd) == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
 		exit(100);
 	}
 }
 
 /**
+ * handle_error - Handles errors and exits with the appropriate code
+ * @code: Exit code
+ * @message: Error message
+ * @file: filename
+ */
+void handle_error(int code, const char *message, const char *file)
+{
+	if (file)
+		dprintf(STDERR_FILENO, message, file);
+	else
+		dprintf(STDERR_FILENO, "%s", message);
+	exit(code);
+}
+
+/**
  * main - Copies the content of a file to another file
- * @argc: number of arguments
- * @argv: array of arguments
+ * @argc: Number of arguments
+ * @argv: Array of arguments
  * Return: 0 on success
  */
 int main(int argc, char *argv[])
@@ -30,24 +48,17 @@ int main(int argc, char *argv[])
 	char buffer[BUFFER_SIZE];
 
 	if (argc != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
+		handle_error(97, "Usage: cp file_from file_to\n", NULL);
 
 	file_from = open(argv[1], O_RDONLY);
 	if (file_from == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-		exit(98);
-	}
+		handle_error(98, "Error: Can't read from file %s\n", argv[1]);
 
 	file_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (file_to == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
 		close_func(file_from);
-		exit(99);
+		handle_error(99, "Error: Can't write to %s\n", argv[2]);
 	}
 
 	while ((read_bytes = read(file_from, buffer, BUFFER_SIZE)) > 0)
@@ -55,19 +66,17 @@ int main(int argc, char *argv[])
 		write_bytes = write(file_to, buffer, read_bytes);
 		if (write_bytes != read_bytes)
 		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
 			close_func(file_from);
 			close_func(file_to);
-			exit(99);
+			handle_error(99, "Error: Can't write to %s\n", argv[2]);
 		}
 	}
 
 	if (read_bytes == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		close_func(file_from);
 		close_func(file_to);
-		exit(98);
+		handle_error(98, "Error: Can't read from file %s\n", argv[1]);
 	}
 
 	close_func(file_from);
