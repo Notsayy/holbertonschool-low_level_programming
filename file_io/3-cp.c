@@ -5,35 +5,19 @@
 
 #define BUFFER_SIZE 1024
 
-void close_func(int fd);
-void handle_error(int code, const char *message, const char *file);
-
 /**
  * close_func - Closes a file descriptor, handling errors
- * @fd: File descriptor
+ * @file: File to close
  */
-void close_func(int fd)
+void close_func(int file)
 {
-	if (close(fd) == -1)
+	int c = close(file);
+
+	if (c == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file);
 		exit(100);
 	}
-}
-
-/**
- * handle_error - Handles errors and exits with the appropriate code
- * @code: Exit code
- * @message: Error message
- * @file: filename
- */
-void handle_error(int code, const char *message, const char *file)
-{
-	if (file)
-		dprintf(STDERR_FILENO, message, file);
-	else
-		dprintf(STDERR_FILENO, "%s", message);
-	exit(code);
 }
 
 /**
@@ -44,41 +28,38 @@ void handle_error(int code, const char *message, const char *file)
  */
 int main(int argc, char *argv[])
 {
-	int file_from, file_to, read_bytes, write_bytes;
-	char buffer[BUFFER_SIZE];
+	int file_from, file_to, readb, writeb;
+	char *buffer;
 
 	if (argc != 3)
-		handle_error(97, "Usage: cp file_from file_to\n", NULL);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
 
+	buffer = malloc(sizeof(char) * 1024);
+	if (!buffer)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+		exit(99);
+	}
 	file_from = open(argv[1], O_RDONLY);
-	if (file_from == -1)
-		handle_error(98, "Error: Can't read from file %s\n", argv[1]);
-
-	file_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (file_to == -1)
-	{
-		close_func(file_from);
-		handle_error(99, "Error: Can't write to %s\n", argv[2]);
-	}
-
-	while ((read_bytes = read(file_from, buffer, BUFFER_SIZE)) > 0)
-	{
-		write_bytes = write(file_to, buffer, read_bytes);
-		if (write_bytes != read_bytes)
+	readb = read(file_from, buffer, 1024);
+	file_to = open(argv[2], O_WRONLY | O_TRUNC | O_CREAT, 0664);
+	do {
+		if (file_from == -1 || readb == -1)
 		{
-			close_func(file_from);
-			close_func(file_to);
-			handle_error(99, "Error: Can't write to %s\n", argv[2]);
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+			exit(98);
 		}
-	}
-
-	if (read_bytes == -1)
-	{
-		close_func(file_from);
-		close_func(file_to);
-		handle_error(98, "Error: Can't read from file %s\n", argv[1]);
-	}
-
+		writeb = write(file_to, buffer, readb);
+		if (file_to == -1 || writeb == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+			exit(99);
+		}
+		readb = read(file_from, buffer, 1024);
+		file_to = open(argv[2], O_WRONLY | O_APPEND);
+	} while (readb > 0);
+	free(buffer);
 	close_func(file_from);
 	close_func(file_to);
 	return (0);
